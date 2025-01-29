@@ -1,0 +1,2 @@
+[console_scripts]
+mr_miner = mr_miner.main:main

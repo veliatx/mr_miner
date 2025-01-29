@@ -1,0 +1,103 @@
+Metadata-Version: 2.2
+Name: mr_miner
+Version: 0.1.dev58+gdbc1237.d20250129
+Summary: Statistical genetics pipeline for performing mendelian randomization efficiently at scale using public summary data. Currently contains classes to adapt OpenTargets GWAS data for outcomes and GTEX QTLs as exposures, but can be extended to other sources.
+Author-email: Dylan Skola <dylan@veliatx.com>
+Project-URL: Documentation, doc/
+Project-URL: Source, https://git-codecommit.us-west-2.amazonaws.com/v1/repos/BigProt
+Keywords: keyword1,keyword2
+Classifier: Development Status :: 3 - Alpha
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: numpy
+Requires-Dist: pandas
+Requires-Dist: scipy
+Requires-Dist: tqdm
+Requires-Dist: pyarrow
+Requires-Dist: statsmodels
+Requires-Dist: scikit-learn
+Provides-Extra: test
+Requires-Dist: pytest>=7.0; extra == "test"
+Requires-Dist: pytest-cov>=4.0; extra == "test"
+Requires-Dist: pysam>=0.22; extra == "test"
+
+# mr_miner
+
+Statistical genetics pipeline for performing Mendelian randomization efficiently at scale using public summary data. Currently contains classes to adapt OpenTargets GWAS data for outcomes and GTEX QTLs as exposures, but can be extended to other sources.
+
+## Installation
+
+```bash
+pip install mr_miner
+```
+
+
+## Features
+
+- Efficient variant ID translation between SPDI and rsID formats
+- Tabix-indexed mapping files for fast lookups 
+- Caching system for frequently accessed translations
+- Multi-threaded processing of dbSNP JSON files
+- Support for compressed input files (gzip, bzip2)
+
+## Quick Start
+
+```python
+from pathlib import Path
+from mr_miner.variant_ids import SpdiRsidTranslatorDbSnp
+
+# Initialize translator with dbSNP data
+translator = SpdiRsidTranslatorDbSnp(
+    dbsnp_path='path/to/dbsnp/files',
+    cache_path='path/to/cache', 
+    threads=32
+)
+
+# Translate SPDIs to rsIDs
+spdis = ['1:12345:A:G', '2:54321:C:T']
+rsids = translator.translate_spdis_to_rsids(spdis)
+
+# Translate rsIDs to SPDIs  
+rsids = ['rs12345', 'rs54321']
+spdis = translator.translate_rsids_to_spdis(rsids)
+```
+
+
+## Dependencies
+
+- numpy
+- pandas 
+- scipy
+- tqdm
+- pyarrow
+- statsmodels
+- scikit-learn
+
+## Development Setup
+
+1. Clone the repository
+2. Install development dependencies
+3. Change to the source directory and run:
+```bash
+pip install .
+```
+
+
+## Testing
+
+```bash
+pytest
+```
+
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Authors
+
+Dylan Skola (dylan@veliatx.com)
+
+For more details on implementation and usage, please refer to the documentation in the doc/ directory.

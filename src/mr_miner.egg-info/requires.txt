@@ -1,0 +1,12 @@
+numpy
+pandas
+scipy
+tqdm
+pyarrow
+statsmodels
+scikit-learn
+
+[test]
+pytest>=7.0
+pytest-cov>=4.0
+pysam>=0.22
